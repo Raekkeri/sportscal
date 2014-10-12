@@ -1,14 +1,11 @@
-from django.contrib import auth
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import CreateView, View
+from django.http import HttpResponseRedirect
+from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 
 from forms import EventForm, ActivityFormset
-from multiform import (
-        ProcessMultipleFormsView, MultipleFormsMixin, BaseMultipleFormsView)
 
 
 class LoginRequiredMixin(object):
