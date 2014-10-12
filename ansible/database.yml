@@ -1,0 +1,8 @@
+- hosts: sportscal-db
+  sudo: yes
+  vars_files:
+    - django-ansible/postgresql/vars/default.yml
+  user: ${user}
+  tasks:
+    - apt: update_cache=yes
+    - include: django-ansible/postgresql/tasks/postgresql.yml
