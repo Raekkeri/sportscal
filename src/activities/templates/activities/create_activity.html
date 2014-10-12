@@ -1,0 +1,8 @@
+<form action="." method="post">
+    {% csrf_token %}
+    <ul>
+    {{ event_form.as_ul }}
+    {{ activity_formset.as_ul }}
+    </ul>
+    <input type="submit">
+</form>
