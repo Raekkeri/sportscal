@@ -38,9 +38,9 @@ class TestActivity(TestCase):
         running = ActivityTypeFactory.create(name='Running')
         stretching = ActivityTypeFactory.create(name='Stretching')
         workout = EventFactory.create()
-        workout.activity_set.create(
+        workout.activities.create(
             type=running, distance=12000, duration=70 * 60)
-        workout.activity_set.create(type=stretching, duration=10 * 60)
+        workout.activities.create(type=stretching, duration=10 * 60)
         self.assertEquals(ActivityFactory.get_model().objects.count(), 2)
 
 
@@ -99,6 +99,6 @@ class TestModifyView(BaseTestCase):
         response = self.client.post(
                 reverse('modify_activity', args=[self.event.pk]), data)
         obj = Event.objects.get()
-        activity = obj.activity_set.get()
+        activity = obj.activities.get()
         self.assertEquals(activity.type, at2)
         self.assertEquals(activity.distance, 3)

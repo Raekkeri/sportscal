@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 
 
 class Event(models.Model):
-    user = models.ForeignKey('auth.User', editable=False)
+    user = models.ForeignKey('auth.User')
     start_time = models.DateTimeField(_('Start time'))
     end_time = models.DateTimeField(_('End time'))
     name = models.CharField(max_length=255, default='')
@@ -19,7 +19,7 @@ class ActivityType(models.Model):
 
 class Activity(models.Model):
     type = models.ForeignKey(ActivityType)
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, related_name='activities')
     distance = models.PositiveIntegerField(_('Distance'), default=0)
     duration = models.PositiveIntegerField(_('Duration'), default=0)
     weight = models.IntegerField(_('Weight'), default=0)

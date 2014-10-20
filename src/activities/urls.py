@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 
-import views
+import views, api_views
 from models import Event
 
 urlpatterns = patterns('',
@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^list/',
         login_required(ListView.as_view(
             queryset=Event.objects.order_by(
-                '-start_time').prefetch_related('activity_set'))),
+                '-start_time').prefetch_related('activities'))),
         name='list_events'),
+    url(r'^events/$', api_views.EventList.as_view()),
+    url(r'^events/(?P<pk>[0-9]+)/$', api_views.EventDetail.as_view()),
 )

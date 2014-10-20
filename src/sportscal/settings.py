@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -113,3 +114,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'collected_static')
 
 # Allauth settings
 ACCOUNT_ADAPTER = 'allauth_overrides.adapter.AccountAdapter'
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ]
+}
