@@ -13,6 +13,9 @@ class ActivityType(models.Model):
     name = models.CharField(_('Name'), max_length=256)
     description = models.TextField(_('Description'), default='')
 
+    def __unicode__(self):
+        return self.name
+
 
 class Activity(models.Model):
     type = models.ForeignKey(ActivityType)
