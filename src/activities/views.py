@@ -14,7 +14,7 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class ActivityCreateView(TemplateResponseMixin, View):
+class ActivityCreateView(TemplateResponseMixin, LoginRequiredMixin,View):
     template_name = 'activities/create_activity.html'
 
     def get(self, request):
