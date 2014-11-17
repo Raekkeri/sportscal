@@ -2,11 +2,11 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
-
 class Event(models.Model):
     user = models.ForeignKey('auth.User', editable=False)
     start_time = models.DateTimeField(_('Start time'))
     end_time = models.DateTimeField(_('End time'))
+    name = models.CharField(max_length=255, default='')
 
 
 class ActivityType(models.Model):

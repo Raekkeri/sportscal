@@ -7,7 +7,7 @@ import models
 class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
-        fields = ('start_time', 'end_time')
+        fields = ('name', 'start_time', 'end_time')
 
 
 ActivityFormset = inlineformset_factory(models.Event, models.Activity,

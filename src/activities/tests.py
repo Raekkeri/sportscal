@@ -55,6 +55,7 @@ class TestCreateView(TestCase):
 
         fh = ModelFormSetHelper(ActivityFormset)
         data = fh.generate([{'type': self.at1.pk, 'weight': 4}], total_forms=1)
+        data['name'] = 'just a jog'
         data['start_time'] = '2014-09-23 12:43'
         data['end_time'] = '2014-09-23 12:43'
 
