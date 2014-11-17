@@ -1,3 +1,6 @@
+{% extends "activities/base.html" %}
+
+{% block content %}
 <form action="." method="post">
     {% csrf_token %}
     <ul>
@@ -6,3 +9,4 @@
     </ul>
     <input type="submit">
 </form>
+{% endblock %}
