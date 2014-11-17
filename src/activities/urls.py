@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^new/', views.ActivityCreateView.as_view(), name='create_activity'),
     url(r'^list/',
         login_required(ListView.as_view(
-            queryset=Event.objects.prefetch_related('activity_set'))),
+            queryset=Event.objects.order_by(
+                '-start_time').prefetch_related('activity_set'))),
         name='list_events'),
 )
