@@ -7,6 +7,8 @@ from models import Event
 
 urlpatterns = patterns('',
     url(r'^new/', views.ActivityCreateView.as_view(), name='create_activity'),
+    url(r'^modify/(?P<pk>\d+)/$', views.ModifyActivityView.as_view(),
+        name='modify_activity'),
     url(r'^list/',
         login_required(ListView.as_view(
             queryset=Event.objects.order_by(

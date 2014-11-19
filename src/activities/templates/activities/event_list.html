@@ -8,6 +8,7 @@
 -- {{ activity.type.name }} {{ activity.repetitions }}x {{ activity.distance }}m
 </p>
 {% endfor %}
+<a href="{% url "modify_activity" pk=event.pk %}">Modify</a>
 <hr />
 {% endfor %}
 
