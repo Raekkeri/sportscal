@@ -109,3 +109,7 @@ STATIC_URL = '/static/'
 SITE_ID = 1
 
 STATIC_ROOT = os.path.join(BASE_DIR, '..', '..', 'collected_static')
+
+
+# Allauth settings
+ACCOUNT_ADAPTER = 'allauth_overrides.adapter.AccountAdapter'
