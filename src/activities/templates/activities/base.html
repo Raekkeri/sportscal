@@ -8,11 +8,11 @@
     <body>
         {% block body_tag %}
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <h1 class="text-center">SportsCal</h1>
-                <div class="text-center">Welcome{% if request.user.is_authenticated %}, {{ request.user.username }}{% endif %}</div>
+            <div class="col-md-8 col-md-offset-2">
+                <h1>SportsCal</h1>
                 {% if request.user.is_authenticated %}
-                <ul class="list-inline text-center">
+                <div>Welcome{% if request.user.is_authenticated %}, {{ request.user.username }}{% endif %}</div>
+                <ul class="list-inline">
                     <li>
                     <a href="{% url "list_events" %}">{% trans "List activities" %}</a>
                     </li>
