@@ -1,11 +1,13 @@
 from django.conf.urls import patterns, url
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 
 import views
 from models import Event
 
 urlpatterns = patterns('',
+    url(r'^$', TemplateView.as_view(template_name='activities/base.html'),
+        name='frontpage'),
     url(r'^new/', views.ActivityCreateView.as_view(), name='create_activity'),
     url(r'^modify/(?P<pk>\d+)/$', views.ModifyActivityView.as_view(),
         name='modify_activity'),
