@@ -11,16 +11,20 @@
             <div class="col-md-8 col-md-offset-2">
                 <h1>SportsCal</h1>
                 <div>Welcome{% if request.user.is_authenticated %}, {{ request.user.username }}{% endif %}</div>
-                {% if request.user.is_authenticated %}
                 <ul class="list-inline">
+                {% if request.user.is_authenticated %}
                     <li>
                     <a href="{% url "list_events" %}">{% trans "List activities" %}</a>
                     </li>
                     <li>
                     <a href="{% url "create_activity" %}">{% trans "New activity" %}</a>
                     </li>
-                </ul>
+                {% else %}
+                    <li>
+                    <a href="{% url "account_login" %}">{% trans "Login" %}</a>
+                    </li>
                 {% endif %}
+                </ul>
             </div>
         </div>
         <div class="row">
