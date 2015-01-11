@@ -7,6 +7,7 @@ from formsettesthelpers import ModelFormSetHelper
 
 from activities.forms import ActivityFormset
 from activities.models import Event
+import scores
 
 
 class EventFactory(ObjectFactory):
@@ -26,6 +27,15 @@ class ActivityTypeFactory(ObjectFactory):
     model = 'activities.ActivityType'
     def default(cls, counter, **kwrags):
         return {'name': 'activity type #%d' % counter}
+
+
+class ActivityFactory(ObjectFactory):
+    model = 'activities.Activity'
+    def default(cls, counter, **kwargs):
+        ret = {}
+        if not 'event' in kwargs:
+            ret['event'] = get_factory('activities.Event').create()
+        return ret
 
 
 EventFactory = get_factory('activities.Event')
@@ -102,3 +112,11 @@ class TestModifyView(BaseTestCase):
         activity = obj.activities.get()
         self.assertEquals(activity.type, at2)
         self.assertEquals(activity.distance, 3)
+
+
+class TestScores(TestCase):
+    def test_distance_based_score(self):
+        t = ActivityTypeFactory.create(name='running',
+                distance_multiplier='2.5', scorer='DistanceBasedScore')
+        a = ActivityFactory.create(type=t, distance=10000)
+        self.assertEquals(a.get_score(), 25)

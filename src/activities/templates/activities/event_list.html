@@ -2,7 +2,7 @@
 
 {% block content %}
 {% for event in event_list %}
-<h3>{{ event.name }} ({{ event.start_time }})</h3>
+<h3>{{ event.name }} ({{ event.start_time }}, score: {{ event.get_score }})</h3>
 {% for activity in event.activities.all %}
 <p>
 -- {{ activity.type.name }} {{ activity.repetitions }}x {{ activity.distance }}m
