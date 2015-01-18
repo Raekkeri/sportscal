@@ -1,12 +1,65 @@
 {% extends "activities/base.html" %}
 
+{% block head_tag %}
+{{ block.super }}
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+{% endblock %}
+
 {% block content %}
 <form action="." method="post">
     {% csrf_token %}
     <ul>
     {{ event_form.as_ul }}
-    {{ activity_formset.as_ul }}
+    {% for activity_form in activity_formset %}
+    <div class="activity">
+        <li>{{ activity_form.type.label_tag }} {{ activity_form.type }}</li>
+        <div class="score_fields">
+        <li>{{ activity_form.distance.label_tag }} {{ activity_form.distance }}</li>
+        <li>{{ activity_form.duration.label_tag }} {{ activity_form.duration }}</li>
+        <li>{{ activity_form.weight.label_tag }} {{ activity_form.weight }}</li>
+        <li>{{ activity_form.repetitions.label_tag }} {{ activity_form.repetitions }}</li>
+        </div>
+        <li>{{ activity_form.DELETE.label_tag }} {{ activity_form.DELETE }}</li>
+        {% for field in  activity_form.hidden_fields %}
+        {{ field }}
+        {% endfor %}
+    </div>
+    {% endfor %}
     </ul>
     <input type="submit">
 </form>
+{% endblock %}
+
+{% block body_tag %}
+{{ block.super }}
+
+<script>
+    var activitytypes_urls = "{% url 'activitytypes_api' %}.json";
+    var activitytypes = null;
+    $.get(activitytypes_urls, function(data) {
+        activitytypes = data;
+    });
+
+    function get_activitytype_by_id(_id) {
+        for (index = 0; index < activitytypes.length; ++index) {
+            if (activitytypes[index].id == parseInt(_id, 10)) {
+                return activitytypes[index];
+            }
+        }
+    }
+
+    $('body').on('change', 'form select', function() {
+        var activitytype = get_activitytype_by_id($(this).val());
+        var parent = $(this).parents('.activity');
+        var e_list = [];
+        activitytype.score_fields.forEach(function(d) {
+            e_list.push(
+                $("input[id$='" + activitytype.score_fields[0] + "']", parent));
+        });
+        $('.score_fields li', parent).hide();
+        e_list.forEach(function(e) {
+            e.parent('li').show();
+        });
+    });
+</script>
 {% endblock %}

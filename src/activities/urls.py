@@ -19,7 +19,8 @@ urlpatterns = patterns('',
 api_patterns = [
     url(r'^events/$', api_views.EventList.as_view()),
     url(r'^events/(?P<pk>[0-9]+)/$', api_views.EventDetail.as_view()),
-    url(r'^activitytypes/$', api_views.ActivityTypeList.as_view()),
+    url(r'^activitytypes/$', api_views.ActivityTypeList.as_view(),
+        name='activitytypes_api'),
 ]
 
 urlpatterns += format_suffix_patterns(api_patterns)
