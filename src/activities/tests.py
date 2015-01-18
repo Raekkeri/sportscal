@@ -38,9 +38,22 @@ class ActivityFactory(ObjectFactory):
         return ret
 
 
+class _UserFactory(ObjectFactory):
+    model = 'auth.User'
+
+    def create(self, *args, **kwargs):
+        set_password = kwargs.pop('set_password', None)
+        obj = super(_UserFactory, self).create(*args, **kwargs)
+        if set_password:
+            obj.set_password(set_password)
+            obj.save()
+        return obj
+
+
 EventFactory = get_factory('activities.Event')
 ActivityTypeFactory = get_factory('activities.ActivityType')
 ActivityFactory = get_factory('activities.Activity')
+UserFactory = get_factory('auth.User')
 
 
 class TestActivity(TestCase):
@@ -120,3 +133,18 @@ class TestScores(TestCase):
                 distance_multiplier='2.5', scorer='DistanceBasedScore')
         a = ActivityFactory.create(type=t, distance=10000)
         self.assertEquals(a.get_score(), 25)
+
+
+class TestList(TestCase):
+    def test_show_only_owned(self):
+        self.user = get_factory('auth.User').create(username='user1',
+                set_password='adg')
+        self.user2 = get_factory('auth.User').create(username='user2',
+                set_password='adg2')
+        event = EventFactory.create(user=self.user)
+        EventFactory.create(user=self.user2)
+        self.client.login(username='user1', password='adg')
+        response = self.client.get(reverse('list_events'))
+        li = response.context['event_list']
+        self.assertEquals(len(li), 1)
+        self.assertEquals(li[0].id, event.id)

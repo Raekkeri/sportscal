@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth.decorators import login_required
@@ -73,3 +73,11 @@ class ModifyActivityView(SingleObjectMixin, ActivityCreateView):
 
     def get_activity_formset(self, event):
         return ActivityFormset(*self._form_initial(), instance=self.object)
+
+
+class ListActivityView(ListView):
+    def get_queryset(self):
+        qs = self.request.user.event_set
+        qs = qs.order_by('-start_time')
+        qs = qs.prefetch_related('activities')
+        return qs
