@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+from rest_framework.urlpatterns import format_suffix_patterns
 
 import views, api_views
 from models import Event
@@ -13,7 +14,12 @@ urlpatterns = patterns('',
         name='modify_activity'),
     url(r'^list/', login_required(views.ListActivityView.as_view()),
         name='list_events'),
+)
+
+api_patterns = [
     url(r'^events/$', api_views.EventList.as_view()),
     url(r'^events/(?P<pk>[0-9]+)/$', api_views.EventDetail.as_view()),
     url(r'^activitytypes/$', api_views.ActivityTypeList.as_view()),
-)
+]
+
+urlpatterns += format_suffix_patterns(api_patterns)
