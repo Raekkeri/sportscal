@@ -53,8 +53,7 @@
         var parent = $(this).parents('.activity');
         var e_list = [];
         activitytype.score_fields.forEach(function(d) {
-            e_list.push(
-                $("input[id$='" + activitytype.score_fields[0] + "']", parent));
+            e_list.push($("input[id$='" + d + "']", parent));
         });
         $('.score_fields li', parent).hide();
         e_list.forEach(function(e) {
