@@ -78,6 +78,5 @@ class ModifyActivityView(SingleObjectMixin, ActivityCreateView):
 class ListActivityView(ListView):
     def get_queryset(self):
         qs = self.request.user.event_set
-        qs = qs.order_by('-start_time')
         qs = qs.prefetch_related('activities')
         return qs

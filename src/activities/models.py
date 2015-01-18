@@ -12,6 +12,9 @@ class Event(models.Model):
     end_time = models.DateTimeField(_('End time'))
     name = models.CharField(max_length=255, default='')
 
+    class Meta:
+        ordering = ['-start_time']
+
     def get_score(self):
         return sum(o.get_score() for o in self.activities.all())
 
