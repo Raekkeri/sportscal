@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from models import Activity, Event
+from models import Activity, ActivityType, Event
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -30,3 +30,23 @@ class EventSerializer(serializers.ModelSerializer):
             activities.append(Activity(**d))
         Activity.objects.bulk_create(activities)
         return obj
+
+
+class ActivityTypeSerializer(serializers.ModelSerializer):
+    score_fields = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ActivityType
+        fields = ('id', 'name', 'description', 'score_fields')
+
+    def get_score_fields(self, obj):
+        multipliers = [
+                'distance_multiplier',
+                'duration_multiplier',
+                'weight_multiplier',
+                'repititions_multiplier',
+                ]
+        return [m.split('_')[0] for m in multipliers if getattr(obj, m, None)]
+
+    def create(self, *args, **kwargs):
+        raise NotImplementedError

@@ -1,5 +1,5 @@
-from models import Event
-from serializers import EventSerializer
+from models import Event, ActivityType
+from serializers import EventSerializer, ActivityTypeSerializer
 from rest_framework import generics, permissions
 from permissions import IsOwner
 
@@ -26,3 +26,11 @@ class EventDetail(EventAPIMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EventSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
             IsOwner)
+
+
+class ActivityTypeList(generics.ListCreateAPIView):
+    serializer_class = ActivityTypeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        return ActivityType.objects.all()

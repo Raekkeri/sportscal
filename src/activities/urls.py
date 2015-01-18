@@ -15,4 +15,5 @@ urlpatterns = patterns('',
         name='list_events'),
     url(r'^events/$', api_views.EventList.as_view()),
     url(r'^events/(?P<pk>[0-9]+)/$', api_views.EventDetail.as_view()),
+    url(r'^activitytypes/$', api_views.ActivityTypeList.as_view()),
 )
