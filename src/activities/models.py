@@ -31,7 +31,7 @@ class ActivityType(models.Model):
     distance_multiplier = models.DecimalField(**multiplier_kwargs)
     duration_multiplier = models.DecimalField(**multiplier_kwargs)
     weight_multiplier = models.DecimalField(**multiplier_kwargs)
-    repititions_multiplier = models.DecimalField(**multiplier_kwargs)
+    repetitions_multiplier = models.DecimalField(**multiplier_kwargs)
     scorer = models.CharField(max_length=256, default='', blank=True,
             choices=[(k, k) for k in AVAILABLE_SCORES.iterkeys()])
 

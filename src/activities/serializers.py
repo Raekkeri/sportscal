@@ -44,7 +44,7 @@ class ActivityTypeSerializer(serializers.ModelSerializer):
                 'distance_multiplier',
                 'duration_multiplier',
                 'weight_multiplier',
-                'repititions_multiplier',
+                'repetitions_multiplier',
                 ]
         return [m.split('_')[0] for m in multipliers if getattr(obj, m, None)]
 
